@@ -1,6 +1,14 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import { createApp, App } from 'vue'
+import { login } from './service/index'
+import { registerApp } from './global/index'
+import rootApp from './App.vue'
+import router from './router'
+import store from './store'
 
-createApp(App).use(store).use(router).mount("#app");
+const app: App<Element> = createApp(rootApp)
+
+app.use(registerApp).use(store).use(router).mount('#app')
+
+login.then((res) => {
+  console.log(res)
+})
