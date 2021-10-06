@@ -28,7 +28,7 @@ class Service {
     //添加所有的实例都有的拦截器
     this.service.interceptors.request.use(
       (config) => {
-        console.log('所有的实例都有')
+        //console.log('所有的实例都有')
         if (this.showLoading) {
           this.loading = ElLoading.service({
             lock: DEFAULT_LOADING,

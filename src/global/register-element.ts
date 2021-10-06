@@ -3,23 +3,27 @@ import { App } from '@vue/runtime-core'
 import {
   ElButton,
   ElTable,
-  ElAlert,
-  ElAside,
-  ElAutocomplete,
-  ElAvatar,
-  ElBacktop,
-  ElBadge
+  ElTabs,
+  ElTabPane,
+  ElForm,
+  ElFormItem,
+  ElRadio,
+  ElInput,
+  ElCheckbox,
+  ElLink
 } from 'element-plus'
 
 const components = [
   ElButton,
   ElTable,
-  ElAlert,
-  ElAside,
-  ElAutocomplete,
-  ElAvatar,
-  ElBacktop,
-  ElBadge
+  ElTabs,
+  ElTabPane,
+  ElForm,
+  ElFormItem,
+  ElRadio,
+  ElInput,
+  ElCheckbox,
+  ElLink
 ]
 
 export default function (app: App<Element>): void {
