@@ -45,6 +45,8 @@ export default defineComponent({
         accountRef.value?.loginAction(isKeepPassworld.value)
       } else {
         console.log('phoneRef调用loginAction')
+        //debugger
+        phoneRef.value?.loginAction(isKeepPassworld.value)
       }
     }
     return {

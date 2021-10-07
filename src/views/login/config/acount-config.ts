@@ -1,6 +1,6 @@
 //编写规则
 export const rules = {
-  account: [
+  name: [
     {
       required: true,
       message: '用户名是必要的',
