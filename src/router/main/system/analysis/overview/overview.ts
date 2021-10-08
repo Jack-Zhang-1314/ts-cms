@@ -1,4 +1,5 @@
-const overview = () => import('@/views/main/system/analysis/overview/overview.vue')
+const overview = () =>
+  import('@/views/main/system/analysis/overview/overview.vue')
 export default {
   path: '/main/system/analysis/overview',
   name: 'overview',
