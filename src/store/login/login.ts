@@ -10,6 +10,7 @@ import {
   requestUserMenusByRoleId
 } from '@/service/login/login'
 import { IAccount } from '@/service/login/type'
+import { mapMenusToRoutes } from '../../utils/map-menus'
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state() {
@@ -72,6 +73,15 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus) {
       state.userMenus = userMenus
+
+      //将userMenus映射到routes=>router.main.children
+      const routes = mapMenusToRoutes(userMenus)
+      //console.log(routes)
+
+      //routes=>router.main.children(映射关系)
+      routes.forEach((route) => {
+        router.addRoute('main', route)
+      })
     }
   }
 }
