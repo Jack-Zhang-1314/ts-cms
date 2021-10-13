@@ -1,15 +1,30 @@
 <template>
   <div class="content">
-    <el-table :data="userList" border style="width: 100%">
+    <el-table
+      :data="userList"
+      border
+      style="width: 100%"
+      @selectionCchange="handleSelectionChange"
+    >
+      <el-table-column
+        v-if="showSelectColumn"
+        type="selection"
+        align="center"
+        width="60"
+      >
+      </el-table-column>
+      <el-table-column
+        v-if="showIndexColumn"
+        type="index"
+        label="序号"
+        align="center"
+      ></el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
         <el-table-column align="center" v-bind="propItem">
           <template #default="scope">
-            <!-- 父组件动态的拿到子组件的值 -->
-            <!-- :row="scope.row"也是一样的,代码不同 -->
-            <slot
-              :name="propItem.slotName"
-              :[propItem.prop]="scope.row[propItem.prop]"
-            >
+            <slot :name="propItem.slotName" :row="scope.row">
+              <!-- 没有slotName属性会直接编译插槽内的内容 -->
+              <!-- 有slotName属性会拿到插槽的内容替换 -->
               {{ scope.row[propItem.prop] }}
             </slot>
           </template>
@@ -20,7 +35,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { IpropData } from '@/views/main/system/user/type'
+import { defineComponent, PropType } from 'vue'
+import { tableValue } from '../types/index'
 export default defineComponent({
   props: {
     userList: {
@@ -28,14 +45,27 @@ export default defineComponent({
       required: true
     },
     propList: {
-      type: Array,
+      type: Array as PropType<IpropData[]>,
       required: true
+    },
+    showIndexColumn: {
+      type: Boolean,
+      default: false
+    },
+    showSelectColumn: {
+      type: Boolean,
+      default: false
     }
   },
-  setup(prop) {
-    const propList = prop.propList as any
-    // eslint-disable-next-line vue/no-dupe-keys
-    return { propList }
+  emits: ['selectionCchange'],
+  setup(props, { emit }) {
+    //使用props传参断言
+    //const propList = prop.propList as Array<IpropData>
+
+    const handleSelectionChange = (value: tableValue) => {
+      emit('selectionCchange', value)
+    }
+    return { handleSelectionChange }
   }
 })
 </script>
