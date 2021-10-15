@@ -25,6 +25,10 @@
                   style="width: 100%"
                   v-model="formData[`${item.field}`]"
                 >
+                  <!-- 不使用v-model绑定,watch监视数据改变,直接使用modelValue绑定和监听 -->
+                  <!--  :model-value="modelValue[`${item.field}`]"
+                      @update:modelValue="handleValueChange($event,item.field)"
+                -->
                   <el-option
                     v-for="option in item.options"
                     :key="option.value"
@@ -53,7 +57,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from '@vue/runtime-core'
+import { defineComponent, PropType, watch } from '@vue/runtime-core'
+import { ref } from 'vue'
 import { IFormItem } from '../types/index'
 
 export default defineComponent({
@@ -86,10 +91,18 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
+    //使用computed计算属性,如果formData发生变化,监听fromData函数会立即调用.产生递归
+    //这里使用浅拷贝
     const formData = ref({ ...props.modelValue })
+
     watch(formData, (newValue) => emit('update:modelValue', newValue), {
       deep: true
     })
+
+    //不采用v-model绑定:handleValueChange
+    /*const handleValueChange = (value: any, field: string) => {
+      emit('update:modelValue', { ...props.modelValue, [field]: value })
+    } */
     return {
       formData
     }

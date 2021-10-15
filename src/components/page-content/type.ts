@@ -6,6 +6,9 @@ export interface IpropData {
   slotName?: string
 }
 
-export interface IpropList {
+export interface ITableConfig {
+  title: string
   propList: Array<IpropData>
+  showIndexColumn: boolean
+  showSelectColumn: boolean
 }

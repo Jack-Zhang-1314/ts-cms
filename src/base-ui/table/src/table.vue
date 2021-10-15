@@ -1,7 +1,13 @@
 <template>
   <div class="content">
+    <div class="header">
+      <div class="title">{{ title }}</div>
+      <div class="handler">
+        <slot name="headerHandler"></slot>
+      </div>
+    </div>
     <el-table
-      :data="userList"
+      :data="dataList"
       border
       style="width: 100%"
       @selectionCchange="handleSelectionChange"
@@ -31,17 +37,24 @@
         </el-table-column>
       </template>
     </el-table>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { IpropData } from '@/views/main/system/user/type'
+import { IpropData } from '@/components/page-content/type'
 import { defineComponent, PropType } from 'vue'
 import { tableValue } from '../types/index'
 export default defineComponent({
   props: {
-    userList: {
-      type: Array,
+    title: {
+      type: String,
+      default: ''
+    },
+    dataList: {
+      type: Array as PropType<tableValue[]>,
       required: true
     },
     propList: {
@@ -74,5 +87,28 @@ export default defineComponent({
 .content {
   padding: 20px;
   border-top: 20px solid gray;
+}
+.header {
+  display: flex;
+  height: 45px;
+  padding: 0 5px;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .handler {
+    align-items: center;
+  }
+}
+
+.footer {
+  margin-top: 15px;
+  .el-pagination {
+    text-align: right;
+  }
 }
 </style>
