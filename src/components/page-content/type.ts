@@ -11,4 +11,11 @@ export interface ITableConfig {
   propList: Array<IpropData>
   showIndexColumn: boolean
   showSelectColumn: boolean
+  childrenProps?: {
+    rowKey: string
+    treeProp: {
+      children: string
+    }
+  }
+  showFooter?: boolean
 }

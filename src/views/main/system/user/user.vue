@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import { formConfig } from './config/search.config'
 
 import PageSearch from '@/components/page-search'
@@ -24,18 +24,13 @@ import PageContent from '@/components/page-content'
 
 import { contentTableConfig } from './config/content.config'
 
+import { usePageSearch } from '@/hooks/usePageSearch'
 export default defineComponent({
   name: 'user',
   components: { PageSearch, PageContent },
   setup() {
-    const pageContentRef = ref<InstanceType<typeof PageContent>>()
-    const handleResetClick = () => {
-      pageContentRef.value?.getPageData()
-    }
-    const handleQueryBtnClick = (queryInfo: any) => {
-      console.log('query')
-      pageContentRef.value?.getPageData(queryInfo)
-    }
+    const [pageContentRef, handleResetClick, handleQueryBtnClick] =
+      usePageSearch()
     return {
       formConfig,
       contentTableConfig,

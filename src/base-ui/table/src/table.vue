@@ -11,6 +11,7 @@
       border
       style="width: 100%"
       @selectionCchange="handleSelectionChange"
+      v-bind="childrenProps"
     >
       <el-table-column
         v-if="showSelectColumn"
@@ -26,7 +27,7 @@
         align="center"
       ></el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column align="center" v-bind="propItem">
+        <el-table-column align="center" v-bind="propItem" show-overflow-tooltip>
           <template #default="scope">
             <slot :name="propItem.slotName" :row="scope.row">
               <!-- 没有slotName属性会直接编译插槽内的内容 -->
@@ -37,8 +38,17 @@
         </el-table-column>
       </template>
     </el-table>
-    <div class="footer">
-      <slot name="footer"></slot>
+    <div class="footer" v-if="showFooter">
+      <el-pagination
+        :current-page="page.currentPage"
+        :page-sizes="[10, 20, 30]"
+        :page-size="page.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="dataCount"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -61,6 +71,10 @@ export default defineComponent({
       type: Array as PropType<IpropData[]>,
       required: true
     },
+    dataCount: {
+      type: Number,
+      default: 0
+    },
     showIndexColumn: {
       type: Boolean,
       default: false
@@ -68,17 +82,37 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false
+    },
+    page: {
+      type: Object,
+      default: () => ({ current: 0, pageSize: 10 })
+    },
+    childrenProps: {
+      type: Object,
+      default: () => ({})
+    },
+    showFooter: {
+      type: Boolean,
+      default: true
     }
   },
-  emits: ['selectionCchange'],
+  emits: ['selectionCchange', 'update:page'],
   setup(props, { emit }) {
     //使用props传参断言
     //const propList = prop.propList as Array<IpropData>
 
+    //console.log(props.dataList, props.dataCount)
     const handleSelectionChange = (value: tableValue) => {
       emit('selectionCchange', value)
     }
-    return { handleSelectionChange }
+    const handleCurrentChange = (currentPage: number) => {
+      emit('update:page', { ...props.page, currentPage })
+    }
+
+    const handleSizeChange = (pageSize: number) => {
+      emit('update:page', { ...props.page, pageSize })
+    }
+    return { handleSelectionChange, handleCurrentChange, handleSizeChange }
   }
 })
 </script>
