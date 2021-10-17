@@ -3,6 +3,8 @@ import { ISystemData } from '../service/main/system/type'
 export interface IRootState {
   account: string
   age: number
+  entireDepartment: any[]
+  entireRole: any[]
 }
 
 export interface IRootWithModule {
