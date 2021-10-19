@@ -72,7 +72,7 @@ export default defineComponent({
     const defaultValue = ref(menu.id + '')
 
     const handleMenuItemClick = (item: any) => {
-      console.log(item)
+      //console.log(item)
       router.push(item.url ?? '/not-found')
     }
     return {

@@ -1,7 +1,7 @@
 import { Module } from 'vuex'
 import { ISystemState } from './types'
 import { IRootState } from '../../type'
-import { getPageListData } from '@/service/main/system/system'
+import { editPageData, getPageListData } from '@/service/main/system/system'
 import { deletePageData } from '@/service/main/system/system'
 import { createPageData } from '../../../service/main/system/system'
 
@@ -75,7 +75,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       const { pageName, editData, id } = payload
       console.log(editData)
       const pageUrl = `/${pageName}/${id}`
-      await createPageData(pageUrl, editData)
+      await editPageData(pageUrl, editData)
 
       //请求最新的数据
       dispatch(`getPageListAction`, {

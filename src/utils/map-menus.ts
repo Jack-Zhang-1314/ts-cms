@@ -79,4 +79,27 @@ export function mapMenusToPermissions(userMenus: any[]) {
   _recurseGetPermissions(userMenus)
   return permissions
 }
+
+/**
+ * @description 获取role中树结构所有菜单中的叶子节点
+ * @author jack-z
+ * @date 19/10/2021
+ * @export
+ * @param {any[]} menuList
+ */
+export function menuMapLeafKeys(menuList: any[]) {
+  const leftKeys: number[] = []
+
+  const _recurseGetLeaf = (menuList: any[]) => {
+    for (const menu of menuList) {
+      if (menu.children) {
+        _recurseGetLeaf(menu.children)
+      } else {
+        leftKeys.push(menu.id)
+      }
+    }
+  }
+  _recurseGetLeaf(menuList)
+  return leftKeys
+}
 export { firstMenu }

@@ -9,7 +9,8 @@ const store = createStore<IRootState>({
       account: 'zhangsan',
       age: 12,
       entireDepartment: [],
-      entireRole: []
+      entireRole: [],
+      entireMenu: []
     }
   },
   mutations: {
@@ -18,6 +19,9 @@ const store = createStore<IRootState>({
     },
     changeEntireRole(state, list) {
       state.entireRole = list
+    },
+    changeEntireMenu(state, list) {
+      state.entireMenu = list
     }
   },
   actions: {
@@ -35,9 +39,15 @@ const store = createStore<IRootState>({
       const { list: roleList } = roleResult.data
       //console.log(departmentList, roleList)
 
+      //role组件中拿到所有树结构的数据
+      const menuResult = await getPageListData('/menu/list', {})
+      const { list: menuList } = menuResult.data
+      //console.log(menuList)
+
       //保存数据
       commit('changeEntireDepartment', departmentList)
       commit('changeEntireRole', roleList)
+      commit('changeEntireMenu', menuList)
     }
   },
   modules: {
@@ -48,6 +58,7 @@ const store = createStore<IRootState>({
 
 export function setupStore() {
   store.dispatch('login/loadLocalLogin')
+  //由于是异步请求不能保证一定先拿到token
   store.dispatch('getInitialDataAction')
 }
 

@@ -29,6 +29,10 @@ const loginModule: Module<ILoginState, IRootState> = {
       const { id, token } = loginResult.data
       commit('changeToken', token)
       localCache.setCache('token', token)
+
+      // 发送初始化的请求(完整的role/department)
+      //dispatch('getInitialDataAction', null, { root: true })
+
       //请求用户数据
       const userInfo = await requestUserInfoById(id)
       const userInfoData = userInfo.data

@@ -74,7 +74,7 @@ export default defineComponent({
       })
       return modalConfig
     })
-
+    //console.log('@', modalConfigRef.value)
     //调用hook获取公共变量和函数
     const [pageModalRef, defaultInfo, handleNewData, handleEditData] =
       usePageModal(newCallback, editCallback)

@@ -7,9 +7,10 @@
     destroy-on-close
   >
     <JKForm v-bind="modalConfig" v-model="formData"></JKForm>
+    <slot></slot>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button @click="dialogVisible">取消</el-button>
         <el-button type="primary" @click="handleConfirmClick">确定</el-button>
       </span>
     </template>
@@ -27,6 +28,11 @@ export default defineComponent({
       required: true
     },
     defaultInfo: {
+      type: Object,
+      default: () => ({})
+    },
+    //结构树中的数据
+    otherInfo: {
       type: Object,
       default: () => ({})
     },
@@ -60,18 +66,18 @@ export default defineComponent({
       dialogVisible.value = false
       if (Object.keys(props.defaultInfo).length) {
         //编辑
-        //console.log('编辑用户')
+        console.log('编辑用户')
         store.dispatch('system/editPageDataAction', {
           pageName: props.pageName,
-          editData: { ...formData.value },
+          editData: { ...formData.value, ...props.otherInfo },
           id: props.defaultInfo.id
         })
       } else {
         //新建
-        //console.log('新建用户')
+        console.log('新建用户')
         store.dispatch('system/createPageDataAction', {
           pageName: props.pageName,
-          newData: { ...formData.value }
+          newData: { ...formData.value, ...props.otherInfo }
         })
       }
     }
