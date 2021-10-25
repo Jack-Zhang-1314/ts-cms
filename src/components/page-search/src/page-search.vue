@@ -50,7 +50,7 @@ export default defineComponent({
 
     //2.当用户点击重置
     const handlerResetClick = () => {
-      //浅拷贝,修改每个key对应的值
+      //深拷贝,修改每个key对应的值
       for (const key in formOriginData) {
         formData.value[key] = formOriginData[key]
       }
