@@ -1,4 +1,4 @@
-import { IAccount, IDataType, ILoginResult } from './type'
+import { IAccount, IDataType, IDataUserInfoById, ILoginResult } from './type'
 import service from '../service'
 
 enum loginAPI {
@@ -14,7 +14,7 @@ export function accountLogin(account: IAccount) {
 }
 
 export function requestUserInfoById(id: number) {
-  return service.get<IDataType>({
+  return service.get<IDataType<IDataUserInfoById>>({
     url: loginAPI.LoginUserInfo + id
   })
 }

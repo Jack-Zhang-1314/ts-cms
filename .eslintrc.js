@@ -10,6 +10,7 @@ module.exports = {
     '@vue/prettier',
     '@vue/prettier/@typescript-eslint',
     'plugin:prettier/recommended'
+    //'@typescript-eslint/no-unused-vars'//脚本中setup函数使用props
   ],
   parserOptions: {
     ecmaVersion: 2020

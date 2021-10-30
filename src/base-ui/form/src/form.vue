@@ -96,7 +96,7 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     //使用computed计算属性,如果formData发生变化,监听fromData函数会立即调用.产生递归
-    //这里使用浅拷贝
+    //这里使用深拷贝
     const formData = ref({ ...props.modelValue })
 
     watch(formData, (newValue) => emit('update:modelValue', newValue), {

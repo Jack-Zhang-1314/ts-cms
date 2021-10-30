@@ -1,4 +1,5 @@
-const path = require('path')
+const { resolve } = require('path')
+//const path = require('path')
 module.exports = {
   publicPath: './',
   devServer: {
@@ -12,9 +13,11 @@ module.exports = {
       }
     }
   },
-  chainWebpack: (config) => {
-    config.resolve.alias
-      .set('@', path.resolve(__dirname, 'src'))
-      .set('components', '@/components')
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@': resolve('src')
+      }
+    }
   }
 }
